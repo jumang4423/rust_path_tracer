@@ -1,5 +1,7 @@
-mod vec3;
 mod ppm_converter;
+mod ray;
+mod renderer;
+mod vec3;
 
 // crates
 use std::fs::File;
@@ -10,8 +12,11 @@ fn main() {
     println!("- loaded settings:\n{:?}", settings);
 
     // convert result to ppm
-    let mut ppm_converter =
-        ppm_converter::ppm_converter::PpmConverter::new(settings.win_width, settings.win_height, vec![]);
+    let mut ppm_converter = ppm_converter::ppm_converter::PpmConverter::new(
+        settings.win_width,
+        settings.win_height,
+        renderer::renderer::render(settings.win_width, settings.win_height),
+    );
     match ppm_converter.export_ppm_as_file(settings.ppm_file_name.as_str()) {
         Ok(_) => println!("- ppm generated"),
         Err(e) => println!("-! Error: {}", e),
@@ -21,8 +26,8 @@ fn main() {
 // load json then return settings
 #[derive(Debug)]
 struct Settings {
-    win_width: u32,
-    win_height: u32,
+    win_width: u64,
+    win_height: u64,
     ppm_file_name: String,
 }
 
@@ -33,8 +38,8 @@ fn get_settings_from_json() -> Settings {
         serde_json::from_reader(file).expect("file should be proper JSON");
 
     // get settings
-    let win_width: u32 = json["width"].as_u64().unwrap() as u32;
-    let win_height: u32 = json["height"].as_u64().unwrap() as u32;
+    let win_width: u64 = json["width"].as_u64().unwrap() as u64;
+    let win_height: u64 = json["height"].as_u64().unwrap() as u64;
     let ppm_file_name: &str = json["ppm_file_name"].as_str().unwrap();
 
     // return settings struct

@@ -3,14 +3,14 @@ use std::io::prelude::*;
 
 // PpmConverter is a struct that contains the data of a ppm file.
 pub struct PpmConverter {
-    width: u32,
-    height: u32,
-    points: Vec<Vec<vec3::vec3::Vec3>>
+    width: u64,
+    height: u64,
+    points: Vec<vec3::vec3::Vec3>
 }
 
 impl PpmConverter {
     // constructor
-    pub fn new(width: u32, height: u32, points: Vec<Vec<vec3::vec3::Vec3>>) -> PpmConverter {
+    pub fn new(width: u64, height: u64, points: Vec<vec3::vec3::Vec3>) -> PpmConverter {
         PpmConverter {
             width,
             height,
@@ -39,7 +39,7 @@ impl PpmConverter {
     fn ppm_body (&mut self) -> String {
         let mut ppm_body = String::new();
 
-        let att_points: Vec<Vec<vec3::vec3::Vec3>>;
+        let att_points: Vec<vec3::vec3::Vec3>;
 
         if self.points.len() == 0 {
             att_points = self.test_rainbow_ppm();
@@ -47,27 +47,25 @@ impl PpmConverter {
             att_points = self.points.clone();
         }
 
-        for row in att_points {
-            for point in row.iter() {
-                ppm_body.push_str(format!("{} {} {} ", point.r() as u8, point.g() as u8, point.b() as u8).as_str());
-            }
-            ppm_body.push_str("\n");
+        for point in att_points {
+            ppm_body.push_str(format!("{} {} {}\n", point.r(), point.g(), point.b()).as_str());
         }
+
         ppm_body
     }
 
     // draw rainbow
-    fn test_rainbow_ppm(&mut self) -> Vec<Vec<vec3::vec3::Vec3>> {
+    fn test_rainbow_ppm(&mut self) -> Vec<vec3::vec3::Vec3> {
         let mut rainbow_points = vec![];
-        for i in 0..self.height {
-            let mut row = vec![];
-            for j in 0..self.width {
-                let red = 255.0 / self.height as f32 * i as f32;
-                let green = 255.0 / self.width as f32 * j as f32;
-                let blue = 255.0 / self.height as f32 * i as f32;
-                row.push(vec3::vec3::Vec3::new(red, green, blue));
+        for i in 0..self.width {
+            for j in 0..self.height {
+                let point = vec3::vec3::Vec3::new(
+                    (i as f32 / self.width as f32) * 255.0,
+                    (j as f32 / self.height as f32) * 255.0,
+                    0.0
+                );
+                rainbow_points.push(point);
             }
-            rainbow_points.push(row);
         }
         rainbow_points
     }

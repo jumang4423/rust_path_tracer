@@ -24,25 +24,27 @@ impl Vec3 {
     pub fn z(&self) -> f32 {
         self.e[2]
     }
-    pub fn r(&self) -> f32 {
-        self.e[0]
+    pub fn r(&self) -> i32 {
+        (255.99 * self.e[0]) as i32
     }
-    pub fn g(&self) -> f32 {
-        self.e[1]
+    pub fn g(&self) -> i32 {
+        (255.99 * self.e[1]) as i32
     }
-    pub fn b(&self) -> f32 {
-        self.e[2]
+    pub fn b(&self) -> i32 {
+        (255.99 * self.e[2]) as i32
     }
 
     pub fn length(&mut self) -> f32 {
         (self.e[0] * self.e[0] + self.e[1] * self.e[1] + self.e[2] * self.e[2]).sqrt()
     }
 
-    pub fn make_unit_vector(&mut self) {
+    pub fn make_unit_vector(&mut self) -> Vec3 {
         let k = 1.0 / self.length();
         self.e[0] *= k;
         self.e[1] *= k;
         self.e[2] *= k;
+
+        self.clone()
     }
 }
 
@@ -216,11 +218,6 @@ pub fn cross(v1: &Vec3, v2: &Vec3) -> Vec3 {
         -(v1.e[0] * v2.e[2] - v1.e[2] * v2.e[0]),
         v1.e[0] * v2.e[1] - v1.e[1] * v2.e[0],
     )
-}
-
-pub fn unit_vector(v: Vec3) -> Vec3 {
-    let len = v.clone().length();
-    v.clone() / len
 }
 
 // test for Vec3
