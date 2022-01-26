@@ -2,6 +2,8 @@ mod ppm_converter;
 mod ray;
 mod renderer;
 mod vec3;
+mod hitable;
+mod hitable_list;
 
 // crates
 use std::fs::File;

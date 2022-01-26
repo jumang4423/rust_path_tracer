@@ -25,13 +25,13 @@ impl Vec3 {
         self.e[2]
     }
     pub fn r(&self) -> i32 {
-        (254.99 * self.e[0]) as i32
+        (255.99 * self.e[0]) as i32
     }
     pub fn g(&self) -> i32 {
-        (254.99 * self.e[1]) as i32
+        (255.99 * self.e[1]) as i32
     }
     pub fn b(&self) -> i32 {
-        (254.99 * self.e[2]) as i32
+        (255.99 * self.e[2]) as i32
     }
 
     pub fn length(&mut self) -> f32 {
