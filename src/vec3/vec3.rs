@@ -46,6 +46,23 @@ impl Vec3 {
 
         self.clone()
     }
+
+    pub fn dot(&mut self, another: Vec3) -> f32 {
+        self.e[0] * another.e[0] + self.e[1] * another.e[1] + self.e[2] * another.e[2]
+    }
+
+    pub fn cross(&mut self, another: Vec3) -> Vec3 {
+        let e1 = self.e[0];
+        let e2 = self.e[1];
+        let e3 = self.e[2];
+        let e4 = another.e[0];
+        let e5 = another.e[1];
+        let e6 = another.e[2];
+
+        Vec3::new(e2 * e6 - e3 * e5, e3 * e4 - e1 * e6, e1 * e5 - e2 * e4)
+    }
+
+
 }
 
 // operation override
@@ -207,19 +224,6 @@ impl DivAssign<f32> for Vec3 {
     }
 }
 
-// vec3 related funcs
-pub fn dot(v1: &Vec3, v2: &Vec3) -> f32 {
-    v1.e[0] * v2.e[0] + v1.e[1] * v2.e[1] + v1.e[2] * v2.e[2]
-}
-
-pub fn cross(v1: &Vec3, v2: &Vec3) -> Vec3 {
-    Vec3::new(
-        v1.e[1] * v2.e[2] - v1.e[2] * v2.e[1],
-        -(v1.e[0] * v2.e[2] - v1.e[2] * v2.e[0]),
-        v1.e[0] * v2.e[1] - v1.e[1] * v2.e[0],
-    )
-}
-
 // test for Vec3
 #[test]
 fn test_vec3_length() {
@@ -280,13 +284,13 @@ fn test_vec3_div_f32() {
 }
 #[test]
 fn test_vec3_dot() {
-    let vec3_1: Vec3 = Vec3::new(1.0, 2.0, 3.0);
+    let mut vec3_1: Vec3 = Vec3::new(1.0, 2.0, 3.0);
     let vec3_2: Vec3 = Vec3::new(4.0, 5.0, 6.0);
-    assert_eq!(dot(&vec3_1, &vec3_2), 32.0);
+    assert_eq!(vec3_1.dot(vec3_2), 32.0);
 }
 #[test]
 fn test_vec3_cross() {
-    let vec3_1: Vec3 = Vec3::new(1.0, 2.0, 3.0);
+    let mut vec3_1: Vec3 = Vec3::new(1.0, 2.0, 3.0);
     let vec3_2: Vec3 = Vec3::new(4.0, 5.0, 6.0);
-    assert_eq!(cross(&vec3_1, &vec3_2), Vec3::new(-3.0, 6.0, -3.0));
+    assert_eq!(vec3_1.cross(vec3_2), Vec3::new(-3.0, 6.0, -3.0));
 }
