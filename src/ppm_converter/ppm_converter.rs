@@ -1,16 +1,16 @@
-use super::super::color;
+use super::super::vec3;
 use std::io::prelude::*;
 
 // PpmConverter is a struct that contains the data of a ppm file.
 pub struct PpmConverter {
     width: u32,
     height: u32,
-    points: Vec<Vec<color::color::Color>>
+    points: Vec<Vec<vec3::vec3::Vec3>>
 }
 
 impl PpmConverter {
     // constructor
-    pub fn new(width: u32, height: u32, points: Vec<Vec<color::color::Color>>) -> PpmConverter {
+    pub fn new(width: u32, height: u32, points: Vec<Vec<vec3::vec3::Vec3>>) -> PpmConverter {
         PpmConverter {
             width,
             height,
@@ -39,7 +39,7 @@ impl PpmConverter {
     fn ppm_body (&mut self) -> String {
         let mut ppm_body = String::new();
 
-        let att_points: Vec<Vec<color::color::Color>>;
+        let att_points: Vec<Vec<vec3::vec3::Vec3>>;
 
         if self.points.len() == 0 {
             att_points = self.test_rainbow_ppm();
@@ -49,7 +49,7 @@ impl PpmConverter {
 
         for row in att_points {
             for point in row.iter() {
-                ppm_body.push_str(format!("{} {} {} ", point.red, point.green, point.blue).as_str());
+                ppm_body.push_str(format!("{} {} {} ", point.r() as u8, point.g() as u8, point.b() as u8).as_str());
             }
             ppm_body.push_str("\n");
         }
@@ -57,15 +57,15 @@ impl PpmConverter {
     }
 
     // draw rainbow
-    fn test_rainbow_ppm(&mut self) -> Vec<Vec<color::color::Color>> {
+    fn test_rainbow_ppm(&mut self) -> Vec<Vec<vec3::vec3::Vec3>> {
         let mut rainbow_points = vec![];
         for i in 0..self.height {
             let mut row = vec![];
             for j in 0..self.width {
-                let red = (255.0 / self.height as f32 * i as f32) as u8;
-                let green = (255.0 / self.width as f32 * j as f32) as u8;
-                let blue = (255.0 / self.height as f32 * i as f32) as u8;
-                row.push(color::color::Color::new(red, green, blue));
+                let red = 255.0 / self.height as f32 * i as f32;
+                let green = 255.0 / self.width as f32 * j as f32;
+                let blue = 255.0 / self.height as f32 * i as f32;
+                row.push(vec3::vec3::Vec3::new(red, green, blue));
             }
             rainbow_points.push(row);
         }
