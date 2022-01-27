@@ -1,5 +1,6 @@
 {
     "width": 640,
     "height": 320,
-    "ppm_file_name": "his/stage2.ppm"
+    "sampling": 128,
+    "ppm_file_name": "his/stage3.ppm"
 }

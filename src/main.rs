@@ -4,6 +4,7 @@ mod renderer;
 mod vec3;
 mod hitable;
 mod hitable_list;
+mod camera;
 
 // crates
 use std::fs::File;
@@ -17,7 +18,7 @@ fn main() {
     let mut ppm_converter = ppm_converter::ppm_converter::PpmConverter::new(
         settings.win_width,
         settings.win_height,
-        renderer::renderer::render(settings.win_width, settings.win_height),
+        renderer::renderer::render(settings.win_width, settings.win_height, settings.sampling),
     );
     match ppm_converter.export_ppm_as_file(settings.ppm_file_name.as_str()) {
         Ok(_) => println!("- ppm generated"),
@@ -30,6 +31,7 @@ fn main() {
 struct Settings {
     win_width: u64,
     win_height: u64,
+    sampling: u64,
     ppm_file_name: String,
 }
 
@@ -42,12 +44,14 @@ fn get_settings_from_json() -> Settings {
     // get settings
     let win_width: u64 = json["width"].as_u64().unwrap() as u64;
     let win_height: u64 = json["height"].as_u64().unwrap() as u64;
+    let sampling: u64 = json["sampling"].as_u64().unwrap() as u64;
     let ppm_file_name: &str = json["ppm_file_name"].as_str().unwrap();
 
     // return settings struct
     Settings {
         win_width,
         win_height,
+        sampling,
         ppm_file_name: ppm_file_name.to_string(),
     }
 }
