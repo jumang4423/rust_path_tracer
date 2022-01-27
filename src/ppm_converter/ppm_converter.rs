@@ -26,7 +26,7 @@ impl PpmConverter {
     }
 
     pub fn export_ppm_as_file(&mut self, file_name: &str) -> std::io::Result<()> {
-        let mut file = std::fs::File::create(file_name).unwrap();
+        let mut file = std::fs::File::create(self.bmp_to_ppm_as_string(file_name.to_string())).unwrap();
         file.write_all(self.ppm_draw_as_string().as_bytes())
     }
     // privates
@@ -38,10 +38,9 @@ impl PpmConverter {
     // body info str
     fn ppm_body (&mut self) -> String {
         let mut ppm_body = String::new();
-
         let att_points: Vec<vec3::vec3::Vec3>;
 
-        if self.points.len() == 0 {
+        if self.points.is_empty() {
             att_points = self.test_rainbow_ppm();
         } else {
             att_points = self.points.clone();
@@ -68,6 +67,11 @@ impl PpmConverter {
             }
         }
         rainbow_points
+    }
+
+
+    fn bmp_to_ppm_as_string(&mut self, file_name: String) -> String {
+        file_name.replace("bmp", "ppm")
     }
 }
 

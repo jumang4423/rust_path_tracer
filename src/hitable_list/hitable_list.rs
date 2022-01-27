@@ -1,9 +1,10 @@
+use super::super::hitable::hitable::{HitRecord, Hitable};
+use super::super::material::material::{Lambertian, Material};
 use super::super::ray::ray::Ray;
 use super::super::vec3::vec3::Vec3;
-use super::super::hitable::hitable::{Hitable, HitRecord};
 
 pub struct HitableList {
-    list: Vec<Hitable>
+    list: Vec<Hitable>,
 }
 
 impl HitableList {
@@ -16,6 +17,9 @@ impl HitableList {
             t: 0.0,
             p: Vec3::new(0.0, 0.0, 0.0),
             normal: Vec3::new(0.0, 0.0, 0.0),
+            material: Box::new(Material::Lambertian(Lambertian::new(Vec3::new(
+                0.0, 0.0, 0.0,
+            )))),
         });
         let mut hit_anything = false;
         let mut closest_so_far = t_max;
@@ -27,9 +31,5 @@ impl HitableList {
             }
         }
         hit_anything
-    }
-
-    pub fn len(&self) -> usize {
-        self.list.len()
     }
 }

@@ -5,8 +5,10 @@ example:
 ```json
 {
     "width": 640,
-    "height": 480,
-    "ppm_file_name": "tracer.ppm"
+    "height": 320,
+    "sampling": 64,
+    "bmp_file_name": "output.bmp",
+    "is_gen_ppm": true
 }
 ```
 

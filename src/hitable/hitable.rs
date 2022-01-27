@@ -1,23 +1,24 @@
 use super::super::ray::ray::Ray;
 use super::super::vec3::vec3::Vec3;
+use super::super::material::material::Material;
 
 #[derive(Debug, Clone)]
 pub struct HitRecord {
     pub t: f32,
     pub p: Vec3,
     pub normal: Vec3,
+    pub material: Box<Material>
 }
-
-
 
 pub struct Hitable {
     center: Vec3,
     radius: f32,
+    material: Box<Material>
 }
 
 impl Hitable {
-    pub fn new(center: Vec3, radius: f32) -> Hitable {
-        Hitable { center, radius }
+    pub fn new(center: Vec3, radius: f32, material: Box<Material>) -> Hitable {
+        Hitable { center, radius, material }
     }
 
     pub fn hit(&self, mut ray: Ray, t_min: f32, t_max: f32, rec: &mut HitRecord) -> bool {
@@ -33,6 +34,7 @@ impl Hitable {
                 rec.t = temp;
                 rec.p = ray.point_at_parameter(rec.t);
                 rec.normal = (rec.p.clone() - self.center.clone()) / self.radius;
+                rec.material = self.material.clone();
                 return true;
             }
         }
