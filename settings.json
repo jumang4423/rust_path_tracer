@@ -1,7 +1,8 @@
 {
-    "width": 640,
-    "height": 320,
-    "sampling": 128,
-    "bmp_file_name": "his/stage5.bmp",
+    "width": 1280,
+    "height": 640,
+    "sampling": 64,
+    "multi_thread_num": 32,
+    "bmp_file_name": "his/stage5_8.bmp",
     "is_gen_ppm": false
 }

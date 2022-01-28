@@ -1,6 +1,7 @@
 use super::super::ray::ray::Ray;
 use super::super::vec3::vec3::Vec3;
 
+#[derive(Debug, Clone)]
 pub struct Camera {
     origin: Vec3,
     lower_left_corner: Vec3,

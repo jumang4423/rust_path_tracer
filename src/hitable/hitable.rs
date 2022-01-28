@@ -10,6 +10,7 @@ pub struct HitRecord {
     pub material: Box<Material>
 }
 
+#[derive(Debug, Clone)]
 pub struct Hitable {
     center: Vec3,
     radius: f32,

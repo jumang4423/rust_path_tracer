@@ -1,18 +1,26 @@
-# rust ray tracer
+# rust path tracer
+
+![](his/stage5_6.bmp)
+
+![](his/stage5_7.bmp)
 
 1. setup settings.json
-example:
+   example:
+
 ```json
 {
-    "width": 640,
-    "height": 320,
-    "sampling": 64,
-    "bmp_file_name": "output.bmp",
-    "is_gen_ppm": true
+  "width": 640,
+  "height": 320,
+  "sampling": 64,
+  "multi_thread_num": 8,
+  "bmp_file_name": "output.bmp",
+  "is_gen_ppm": true
 }
 ```
 
 2. run
+
 ```
-cargo run --release && open *.ppm
+# generates <bmp_file_name>
+cargo run --release
 ```
