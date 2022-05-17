@@ -20,16 +20,24 @@ fn main() {
     // render scene
     println!("- rendering scene...");
 
+    let lookfrom: vec3::vec3::Vec3 = vec3::vec3::Vec3::new(0.0, 1.0, 0.0);
+    let lookat: vec3::vec3::Vec3 = vec3::vec3::Vec3::new(0.0, 0.0, -1.0);
+    let dist_to_focus: f32 = (lookfrom.clone() - lookat.clone()).length();
+    let aperture: f32 = 0.05;
+
     let camera: Arc<Mutex<camera::camera::Camera>> =
         Arc::new(Mutex::new(camera::camera::Camera::new(
-            vec3::vec3::Vec3::new(0.0, 0.0, 0.0),
-            vec3::vec3::Vec3::new(-2.0, -1.0, -1.0),
-            vec3::vec3::Vec3::new(4.0, 0.0, 0.0),
-            vec3::vec3::Vec3::new(0.0, 2.0, 0.0),
+            lookfrom,
+            lookat,
+            vec3::vec3::Vec3::new(0.0, 1.0, 0.0),
+            20.0,
+            (settings.win_width as f32) / (settings.win_height as f32),
+            aperture,
+            dist_to_focus,
         )));
 
     let world: Arc<Mutex<hitable_list::hitable_list::HitableList>> =
-        Arc::new(Mutex::new(hitable_list::hitable_list::every_materials()));
+        Arc::new(Mutex::new(hitable_list::hitable_list::hundred_spheres()));
 
     let pixels = renderer::renderer::render(
         settings.win_width,

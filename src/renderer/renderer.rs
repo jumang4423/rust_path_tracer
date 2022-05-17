@@ -35,7 +35,7 @@ fn color(ray: &mut Ray, world: &HitableList, depth: i32) -> Vec3 {
         {
             return attenuation * color(&mut scattered, world, depth + 1);
         } else {
-            return Vec3::new(0.0, 0.0, 0.0); // return vec of record
+            return ray.clone().origin
         }
     } else {
         let unit_direction: Vec3 = ray.direction().make_unit_vector();
@@ -105,8 +105,6 @@ pub fn render(
             pixels.push(pixel);
         }
     }
-
-    println!("{}", pixels.len());
 
     pixels
 }

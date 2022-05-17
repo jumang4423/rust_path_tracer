@@ -53,7 +53,7 @@ pub fn hundred_spheres() -> HitableList {
 
         world.list.push(Hitable::new(
             Vec3::new(rng_x, rng_y, rng_z),
-            -rng_radius + 0.01,
+            -rng_radius + 0.1,
             Box::new(rng_material),
         ));
     }
@@ -142,12 +142,12 @@ pub fn every_materials() -> HitableList {
         Hitable::new(
             Vec3::new(-1.0, 0.0, -1.0),
             0.5,
-            Box::new(Material::Dielectric(Dielectric::new(1.5))),
+            Box::new(Material::Dielectric(Dielectric::new(2.5))),
         ),
         Hitable::new(
             Vec3::new(-1.0, 0.0, -1.0),
             -0.45,
-            Box::new(Material::Dielectric(Dielectric::new(1.5))),
+            Box::new(Material::Dielectric(Dielectric::new(2.5))),
         ),
         // under wall
         Hitable::new(
